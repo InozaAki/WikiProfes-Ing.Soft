@@ -5,17 +5,7 @@ class RegistroForm(forms.Form):
     username = forms.CharField()
     email = forms.EmailField()
     password = forms.CharField()
-    confirmationPassword = forms.CharField()
-
-    def clean(self):
-        
-        password = self.cleaned_data.get('password')
-        confirmationPassword = self.cleaned_data.get('password2')
-
-        if password != confirmationPassword:
-            raise forms.ValidationError('Las contraseñas no coinciden')
-
-        return super().clean()
+    password2 = forms.CharField()
 
     def clean_username(self):
         usuario = self.cleaned_data.get('username')
@@ -34,3 +24,15 @@ class RegistroForm(forms.Form):
     def storeUser(self):
         self.cleaned_data.pop('password2')
         return User.objects.create_user(**self.cleaned_data)
+    
+    
+    def clean(self):  
+        datos = self.cleaned_data;
+
+        password = datos.get('password')
+        confirmationPassword = datos.get('password2')
+
+        if password != confirmationPassword:
+            raise forms.ValidationError('Las contraseñas no coinciden')
+
+        return datos

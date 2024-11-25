@@ -5,9 +5,9 @@ from .forms import RegistroForm
 
 # Create your views here.
 class RegistroView(generic.FormView):
-    template_name = ''
+    template_name = 'usuario/registro.html'
     form_class = RegistroForm
-    success_url = reverse_lazy('')
+    success_url = reverse_lazy('usuario:registro')
 
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
@@ -16,5 +16,5 @@ class RegistroView(generic.FormView):
 
     def form_valid(self, form):
         usuario = form.storeUser()
-        #Usuario utilizadfo en login en el futuro
+        #Usuario utilizado en login en el futuro
         return super().form_valid(form)
