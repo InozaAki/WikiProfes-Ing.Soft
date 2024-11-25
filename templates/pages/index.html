@@ -5,50 +5,21 @@
 {% endblock title %}
 
 {% block content %}
-<nav class="navbar navbar-expand-lg bg-body-tertiary bg-dark" data-bs-theme="dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">WikiProfes</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavDropdown">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Profesores</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Materias</a>
-            </li>
-          </ul>
-          <form class="d-flex" role="search">
-            <input class="form-control me-2" type="search" placeholder="Profesor/Materia" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Buscar</button>
-          </form>
-          <ul class="navbar-nav mb-2 mb-lg-0">
 
-            {% if user.is_authenticated %}
-                <li class="nav-item">
-                    <a class="nav-link">Hola, {{user.username}}</a>
-                </li>
-                <li class="nav-item">
-                    <a href="/logout" class="nav-link">Cerrar sesión</a>
-                </li>
-            {% else %}
-                <li class="nav-item">
-                    <a class="nav-link" href="/inicio-sesion">Iniciar sesión</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/registro">Registrarse</a>
-                </li>
-            {% endif %}
-            
-          </ul>
-        </div>
-    </div>
-</nav>
+{% if user.is_authenticated %}
+<button type="button" class="btn btn-outline-primary position-fixed bottom-0 end-0 mb-5 me-5">
+    Crear publicación 
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+        </svg>
+</button>
+{% else %}
+<div class="alert alert-warning" role="alert">
+    Para poder crear publicaciones y comentar debes iniciar sesión
+  </div>
+{% endif %}
+
 <div style="margin-top: 3rem;">
     {% for publicacion in publicacion_list %}    
     <section>
@@ -56,8 +27,10 @@
             <div class="card text-center">
                 <div class="card-body">
                 <h5 class="card-title">{{publicacion.titulo}}</h5>
+                <h6 class="card-subtitle mb-2 text-body-secondary text-start">{{publicacion.materia}}</h6>
                 <p class="card-text">{{publicacion.comentario}}</p>
-                <h6 class="card-subtitle mb-2 text-body-secondary text-end">Acerca de {{publicacion.profesor}}</h6>
+                <h6 class="card-subtitle mb-2 text-body-secondary text-end">Acerca de <a href="{% url 'publicacion:profesor' publicacion.profesor.id %}">{{publicacion.profesor}}</a></h6>
+                <h6 class="card-subtitle mb-2 text-body-secondary text-end"></h6>
                 <a href="#" class="btn btn-primary">Ver más</a>
                 </div>
                 <div class="card-footer text-body-secondary">
@@ -69,15 +42,4 @@
     {% endfor %}
 </div>
 
-{% if user.is_authenticated %}
-<button type="button" class="btn btn-outline-primary position-fixed bottom-0 end-0 mb-5 me-5">
-    Crear publicación 
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
-        </svg>
-</button>
-{% endif %}
-
 {% endblock content %}
-

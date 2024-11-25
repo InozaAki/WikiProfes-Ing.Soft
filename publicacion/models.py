@@ -5,8 +5,8 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 class Publicacion(models.Model):
-    materia = models.ForeignKey(Materia, on_delete=models.CASCADE)
     profesor = models.ForeignKey(Profesor, on_delete=models.CASCADE)
+    materia = models.ForeignKey(Materia, on_delete=models.CASCADE)
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     titulo = models.CharField(max_length=80)
     fecha = models.DateField()
