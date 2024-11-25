@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}
+<title>Registro</title>
+{% endblock title%}
+
+{% block content %}
+<section>
+    <div class="container">
+        <h1>Registra tu usuario</h1>
+        {% for error in form.non_field_error %}
+        <div class="alert alert-danger" role="alert">
+            {{error}}
+        </div>
+        {% endfor %}
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="username-id" class="form-label">Usuario</label>
+                <input type="text" 
+                class="form-control" 
+                id="username-id" 
+                name="username"
+                {% if form.errors %}
+                value="{{form.username.value}}"
+                {% edif %}
+                >
+                {% for error in form.username.errors %}
+                <p style="color:#ff3333 ;">{{error}}</p>
+                {% endfor %}
+            </div>
+            <div class="mb-3">
+                <label for="email-id" class="form-label">Correo</label>
+                <input type="email" class="form-control" id="email-id" name="email">
+            </div>
+            <div class="mb-3">
+                <label for="password-id" class="form-label">Contraseña</label>
+                <input type="password" class="form-control" id="password-id" name="password">
+            </div>
+            <div class="mb-3">
+                <label for="password2-id" class="form-label">Confirma tú Contraseña</label>
+                <input type="password" class="form-control" id="password2-id" name="password2">
+            </div>
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="reset" class="btn btn-primary">Limpiar</button>
+                <button type="submit" class="btn btn-primary">Enviar</button>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock content %}
