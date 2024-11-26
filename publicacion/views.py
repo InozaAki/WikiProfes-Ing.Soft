@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.views import generic
 from .models import Publicacion
 from profesor.models import Profesor
+from materia.models import Materia
 
 # Create your views here.
 class ProfesorView(generic.ListView):
@@ -24,5 +25,14 @@ class ProfesorView(generic.ListView):
     
 class MateriaView(generic.ListView):
     template_name = 'materia/materiaDetalles.html'
+
     def get_queryset(self):
-        return Publicacion.objects.filter(materia_id=self.kwargs['materia_id'])
+
+        materia = Publicacion.objects.filter(materia_id=self.kwargs['materia_id'])
+
+        if not materia:
+            materia = Materia.objects.filter(id=self.kwargs['materia_id'])
+
+        print(materia)
+
+        return materia

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title  %}
+<title>Materias</title>
+{% endblock title  %}
+
+{% block content %}
+
+<div style="margin-top: 3rem;">
+    {% for departamento, materias in departamentos.items %}
+    <h3 style="text-align: center; padding: 1rem;">{{ departamento }}</h3>
+    <div class="row" style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: flex-start;">
+        {% for materia in materias %}
+        <div class="container" style="flex: 1 1 calc(25% - 1rem); max-width: calc(25% - 1rem);">
+            <div class="card" style="width: 100%; margin: 0 auto;">
+                <div class="card-body">
+                <h5 class="card-title">{{materia.nombre}}</h5>
+                <p class="card-text">{{materia.clave}}</p>
+                <a class="btn btn-primary" href="{% url 'publicacion:materia' materia.id %}">Ver detalles</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock content %}
