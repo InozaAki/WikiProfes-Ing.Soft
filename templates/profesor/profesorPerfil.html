@@ -45,9 +45,9 @@
             <div class="card text-center">
                 <div class="card-body">
                 <h5 class="card-title">{{publicacion.titulo}}</h5>
-                <h6 class="card-subtitle mb-2 text-body-secondary text-start">{{publicacion.materia}}</h6>
+                <h6 class="card-subtitle mb-2 text-body-secondary text-start"><a href="{% url 'publicacion:materia' publicacion.materia.id %}">{{publicacion.materia}}</a></h6>
                 <p class="card-text">{{publicacion.comentario}}</p>
-                <h6 class="card-subtitle mb-2 text-body-secondary text-end">Acerca de {{publicacion.profesor}}</h6>
+                <h6 class="card-subtitle mb-2 text-body-secondary text-end">Acerca de <a href="{% url 'publicacion:profesor' publicacion.profesor.id %}">{{publicacion.profesor}}</a></h6>
                 <h6 class="card-subtitle mb-2 text-body-secondary text-end"></h6>
                 <a href="#" class="btn btn-primary">Ver más</a>
                 </div>

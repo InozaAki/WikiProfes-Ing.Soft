@@ -21,3 +21,8 @@ class ProfesorView(generic.ListView):
         context['promedioGeneral'] = profesor.promedioGeneral
         context['rangoEstrellas'] = rangoEstrellas
         return context
+    
+class MateriaView(generic.ListView):
+    template_name = 'materia/materiaDetalles.html'
+    def get_queryset(self):
+        return Publicacion.objects.filter(materia_id=self.kwargs['materia_id'])

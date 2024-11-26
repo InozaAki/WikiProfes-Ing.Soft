@@ -1,5 +1,10 @@
+from datetime import date
 from django import forms
 from django.contrib.auth.models import User
+from django.shortcuts import get_object_or_404
+from publicacion.models import Publicacion
+from profesor.models import Profesor
+from materia.models import Materia
 
 class RegistroForm(forms.Form):
     username = forms.CharField()
@@ -36,3 +41,35 @@ class RegistroForm(forms.Form):
             raise forms.ValidationError('Las contraseñas no coinciden')
 
         return datos
+
+
+class PublicacionForm(forms.Form):
+    materia = forms.IntegerField()
+    profesor = forms.IntegerField()
+    titulo = forms.CharField()
+    comentario = forms.CharField(widget=forms.TextInput())
+    dominio = forms.IntegerField()
+    puntualidad = forms.IntegerField()
+    asistencia = forms.IntegerField()
+    dificultad = forms.IntegerField()
+    seguimiento = forms.IntegerField()
+
+    def __init__(self, *args, usuario=None, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.usuario = usuario
+
+    def storePublicacion(self):
+        cleaned_data = self.cleaned_data
+
+        materia = get_object_or_404(Materia, id=cleaned_data.pop('materia'))
+        profesor = get_object_or_404(Profesor, id=cleaned_data.pop('profesor'))
+        usuario = get_object_or_404(User, id=self.usuario)
+        fecha = date.today()
+
+        return Publicacion.objects.create(
+            usuario=usuario,
+            materia=materia,
+            profesor=profesor,
+            fecha=fecha,
+            **cleaned_data
+        )

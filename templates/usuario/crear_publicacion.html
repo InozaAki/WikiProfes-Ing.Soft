@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}
+<title>Crear publicación</title>
+{% endblock title %}
+
+{% block content %}
+
+<section>
+    <div class="container">
+        <h3>Crea publicación</h3>
+        <form method="post">
+            {% csrf_token %}
+            <div>
+                <div class="form-group col-md-4">
+                    <label for="inputMateria">Materia</label>
+                    <select id="inputMateria" class="form-control" name="materia">
+                      <option selected hidden>Elige una opción</option>
+                      {% for materia in materias %}
+                      <option value={{materia.id}}> {{materia.nombre}} </option>
+                      {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="inputProfesor">Profesor</label>
+                    <select id="inputProfesor" class="form-control" name="profesor">
+                        <option selected hidden>Elige una opción</option>
+                        {% for profesor in profesores %}
+                        <option value={{profesor.id}}>{{profesor.nombre}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="inputTitulo">Título</label>
+                    <input type="text" class="form-control" id="inputTitulo" name="titulo">
+                </div>
+                <div class="form-group">
+                    <label for="inputTitulo">Comentario</label>
+                    <textarea class="form-control" id="inputComentario" name="comentario"></textarea>
+                </div>
+                <div class="row" style="margin-top: 0.2rem;">
+                    <h5> Criterios de evaluación ( 0 - 10 )</h5>
+                    <div class="col">
+                        <label for="inputDominio">Dominio</label>
+                      <input type="tel" maxlength="2" class="form-control" id="inputDominio" name="dominio">
+                    </div>
+                    <div class="col">
+                        <label for="inputPuntualidad">Puntualidad</label>
+                      <input type="tel" maxlength="2" class="form-control" id="inputPuntualidad" name="puntualidad">
+                    </div>
+                    <div class="col">
+                        <label for="inputAsistencia">Asistencia</label>
+                      <input type="tel" maxlength="2" class="form-control" id="inputAsistencia" name="asistencia">
+                    </div>
+                    <div class="col">
+                        <label for="inputDificultad">Dificultad</label>
+                      <input type="tel" maxlength="2" class="form-control" id="inputDificultad" name="dificultad">
+                    </div>
+                    <div class="col">
+                        <label for="inputSeguimiento">Seguimiento</label>
+                      <input type="tel" maxlength="2" class="form-control" id="inputSeguimiento" name="seguimiento">
+                    </div>
+                  </div>
+            </div>
+            <div style="margin-top: 2rem;" class="btn-group" role="group" aria-label="Basic example">
+                <button type="reset" class="btn btn-primary">Limpiar</button>
+                <button type="submit" class="btn btn-primary">Crear publicación</button>
+            </div>
+        </form>
+    </div>
+</section>
+
+{% endblock content %}
