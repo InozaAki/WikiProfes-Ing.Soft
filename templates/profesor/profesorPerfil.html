@@ -49,10 +49,10 @@
                 <p class="card-text">{{publicacion.comentario}}</p>
                 <h6 class="card-subtitle mb-2 text-body-secondary text-end">Acerca de <a href="{% url 'publicacion:profesor' publicacion.profesor.id %}">{{publicacion.profesor}}</a></h6>
                 <h6 class="card-subtitle mb-2 text-body-secondary text-end"></h6>
-                <a href="#" class="btn btn-primary">Ver más</a>
+                <a href="{% url 'publicacion:detalle' publicacion.id %}" class="btn btn-primary">Ver más</a>
                 </div>
                 <div class="card-footer text-body-secondary">
-                   Por {{publicacion.usuario}} el {{ publicacion.fecha|date:"d M Y" }}
+                    Por {{publicacion.usuario}} el {{ publicacion.fecha|date:"d M Y" }}
                 </div>
             </div>
         </div>

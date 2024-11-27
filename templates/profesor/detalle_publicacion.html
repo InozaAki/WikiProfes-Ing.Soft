@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}
+<title>Detalles de {{ publicacion.titulo }}</title>
+{% endblock title %}
+
+{% block content %}
+<div class="container">
+    <h1>{{ publicacion.titulo }}</h1>
+    <p><strong>Profesor:</strong> {{ publicacion.profesor.nombre }}</p>
+    <p><strong>Materia:</strong> {{ publicacion.materia.nombre }}</p>
+    <p><strong>Usuario:</strong> {{ publicacion.usuario }}</p>
+    <p><strong>Fecha:</strong> {{ publicacion.fecha|date:"d M Y" }}</p>
+    <p><strong>Comentario:</strong> {{ publicacion.comentario }}</p>
+    <ul>
+        <li><strong>Dominio:</strong> {{ publicacion.dominio }}</li>
+        <li><strong>Puntualidad:</strong> {{ publicacion.puntualidad }}</li>
+        <li><strong>Asistencia:</strong> {{ publicacion.asistencia }}</li>
+        <li><strong>Dificultad:</strong> {{ publicacion.dificultad }}</li>
+        <li><strong>Seguimiento:</strong> {{ publicacion.seguimiento }}</li>
+    </ul>
+    <a href="javascript:history.back()" class="btn btn-secondary">Volver</a>
+</div>
+{% endblock content %}

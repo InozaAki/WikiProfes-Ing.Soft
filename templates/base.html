@@ -15,22 +15,22 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
-              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                  <a class="nav-link" aria-current="page" href="/">Home</a>
+                    <a class="nav-link" aria-current="page" href="/">Home</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="/profesores">Profesores</a>
+                    <a class="nav-link" href="/profesores">Profesores</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/materias">Materias</a>
                 </li>
-              </ul>
-              <form class="d-flex" role="search">
+            </ul>
+            <form class="d-flex" role="search">
                 <input class="form-control me-2" type="search" placeholder="Profesor/Materia" aria-label="Search">
                 <button class="btn btn-outline-success" type="submit">Buscar</button>
-              </form>
-              <ul class="navbar-nav mb-2 mb-lg-0">
+            </form>
+            <ul class="navbar-nav mb-2 mb-lg-0">
     
                 {% if user.is_authenticated %}
                     <li class="nav-item">
@@ -48,7 +48,7 @@
                     </li>
                 {% endif %}
                 
-              </ul>
+            </ul>
             </div>
         </div>
     </nav>
