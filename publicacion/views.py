@@ -27,13 +27,10 @@ class MateriaView(generic.ListView):
     template_name = 'materia/materiaDetalles.html'
 
     def get_queryset(self):
-
         materia = Publicacion.objects.filter(materia_id=self.kwargs['materia_id'])
 
         if not materia:
             materia = Materia.objects.filter(id=self.kwargs['materia_id'])
-
-        print(materia)
 
         return materia
 
