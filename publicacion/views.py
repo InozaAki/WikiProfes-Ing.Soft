@@ -36,3 +36,8 @@ class MateriaView(generic.ListView):
         print(materia)
 
         return materia
+
+class DetallePublicacionView(generic.DetailView):
+    model = Publicacion
+    template_name = 'profesor/detalle_publicacion.html'
+    context_object_name = 'publicacion'
