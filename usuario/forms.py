@@ -64,12 +64,10 @@ class PublicacionForm(forms.Form):
         materia = get_object_or_404(Materia, id=cleaned_data.pop('materia'))
         profesor = get_object_or_404(Profesor, id=cleaned_data.pop('profesor'))
         usuario = get_object_or_404(User, id=self.usuario)
-        fecha = date.today()
 
         return Publicacion.objects.create(
             usuario=usuario,
             materia=materia,
             profesor=profesor,
-            fecha=fecha,
             **cleaned_data
         )

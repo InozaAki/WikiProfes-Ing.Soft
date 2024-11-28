@@ -31,27 +31,28 @@ class CrearPublicacion(generic.FormView):
 
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
-            return redirect(self.success_url)
+            return redirect(self.success_url) 
         return super().dispatch(request, *args, **kwargs)
-
+    
     def get_form_kwargs(self):
-        """Añadir el usuario actual a los argumentos del formulario."""
         kwargs = super().get_form_kwargs()
-        kwargs['usuario'] = self.request.user
+        kwargs['usuario'] = self.request.user.id        
         return kwargs
 
     def form_valid(self, form):
-        """Guardar la publicación si el formulario es válido."""
-        publicacion = form.save(commit=False)
-        publicacion.usuario = self.request.user
-        publicacion.save()
+        publicacion = form.storePublicacion()
         return redirect(self.success_url)
-
+    
     def get_context_data(self, **kwargs):
-        """Agregar el contexto de materias y profesores al formulario."""
+
         context = super().get_context_data(**kwargs)
-        context['materias'] = Materia.objects.all()
-        context['profesores'] = Profesor.objects.all()
+        
+        profesor = Profesor.objects.all()
+        materia = Materia.objects.all()
+
+        context['materias'] = materia
+        context['profesores'] = profesor
+
         return context
 
 class InicioSesionView(views.LoginView):
@@ -63,6 +64,16 @@ def logOutRequest(request):
     logout(request)
     return redirect(reverse_lazy('usuario:index'))
 
+def busqueda(request):
+    template_name = 'pages/busqueda.html'
+
+    if request.method == 'POST':
+        print("culos")
+
+
+
+    return render(request, template_name)
+
 class HomeView(generic.ListView):
     model = Publicacion
     template_name = 'pages/index.html'
@@ -70,12 +81,3 @@ class HomeView(generic.ListView):
 
     def get_queryset(self):
         return Publicacion.objects.order_by('-fecha')[:5]
-
-class PublicacionForm(forms.ModelForm):
-    class Meta:
-        model = Publicacion
-        fields = ['titulo', 'comentario', 'materia', 'profesor', 'dominio', 'puntualidad', 'asistencia', 'dificultad', 'seguimiento']
-
-    def __init__(self, *args, **kwargs):
-        self.usuario = kwargs.pop('usuario', None)
-        super().__init__(*args, **kwargs)

@@ -8,4 +8,5 @@ urlpatterns = [
     path('', views.HomeView.as_view(), name='index'),
     path('logout', views.logOutRequest, name='logout'),
     path('crear-publicacion', views.CrearPublicacion.as_view(), name='crear-publicacion'),
+    path('busqueda', views.busqueda, name='busqueda'),
 ]
