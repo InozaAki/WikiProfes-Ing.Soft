@@ -8,26 +8,38 @@
 
 {% if not user.is_authenticated %}
 <div class="alert alert-warning" role="alert">
-    Para poder crear publicaciones debes iniciar sesión o registrate si aún no lo has hecho.
+    Para poder crear publicaciones debes iniciar sesión o registrarte si aún no lo has hecho.
 </div>
 {% endif %}
 
-
 <div style="margin-top: 3rem;">
-    {% for publicacion in publicacion_list %}    
+    {% for publicacion in publicacion_list %}
     <section>
         <div class="container" style="margin-top: 1rem;">
             <div class="card text-center">
                 <div class="card-body">
-                <h5 class="card-title">{{publicacion.titulo}}</h5>
-                <h6 class="card-subtitle mb-2 text-body-secondary text-start"><a href="{% url 'publicacion:materia' publicacion.materia.id %}">{{publicacion.materia}}</a></h6>
-                <p class="card-text">{{publicacion.comentario}}</p>
-                <h6 class="card-subtitle mb-2 text-body-secondary text-end">Acerca de <a href="{% url 'publicacion:profesor' publicacion.profesor.id %}">{{publicacion.profesor}}</a></h6>
-                <h6 class="card-subtitle mb-2 text-body-secondary text-end"></h6>
-                <a href="{% url 'publicacion:detalle' publicacion.id %}" class="btn btn-primary">Ver más</a>
+                    <h5 class="card-title">{{ publicacion.titulo }}</h5>
+                    <h6 class="card-subtitle mb-2 text-body-secondary text-start">
+                        <a href="{% url 'publicacion:materia' publicacion.materia.id %}">{{ publicacion.materia }}</a>
+                    </h6>
+                    <p class="card-text">{{ publicacion.comentario }}</p>
+                    <h6 class="card-subtitle mb-2 text-body-secondary text-end">
+                        Acerca de <a href="{% url 'publicacion:profesor' publicacion.profesor.id %}">{{ publicacion.profesor }}</a>
+                    </h6>
+                    
+                    <!-- Mostrar los valores numéricos -->
+                    <div class="mt-3">
+                        <p><strong>Dominio:</strong> {{ publicacion.dominio }}/10</p>
+                        <p><strong>Puntualidad:</strong> {{ publicacion.puntualidad }}/10</p>
+                        <p><strong>Asistencia:</strong> {{ publicacion.asistencia }}/10</p>
+                        <p><strong>Dificultad:</strong> {{ publicacion.dificultad }}/10</p>
+                        <p><strong>Seguimiento:</strong> {{ publicacion.seguimiento }}/10</p>
+                    </div>
+
+                    <a href="{% url 'publicacion:detalle' publicacion.id %}" class="btn btn-primary mt-3">Ver más</a>
                 </div>
                 <div class="card-footer text-body-secondary">
-                    Por {{publicacion.usuario}} el {{ publicacion.fecha|date:"d M Y" }}
+                    Por {{ publicacion.usuario }} el {{ publicacion.fecha|date:"d M Y" }}
                 </div>
             </div>
         </div>

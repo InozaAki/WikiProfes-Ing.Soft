@@ -1,13 +1,13 @@
 from django.shortcuts import render, redirect
 from django.views import generic
 from django.urls import reverse_lazy
-from .forms import RegistroForm
-from .forms import PublicacionForm
+from .forms import RegistroForm, PublicacionForm
 from django.contrib.auth import views
 from django.contrib.auth import logout
 from publicacion.models import Publicacion
 from profesor.models import Profesor
 from materia.models import Materia
+from django import forms
 
 # Create your views here.
 class RegistroView(generic.FormView):
@@ -22,7 +22,6 @@ class RegistroView(generic.FormView):
 
     def form_valid(self, form):
         usuario = form.storeUser()
-        #Usuario utilizado en login en el futuro
         return super().form_valid(form)
 
 class CrearPublicacion(generic.FormView):
@@ -32,28 +31,27 @@ class CrearPublicacion(generic.FormView):
 
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
-            return redirect(self.success_url) 
+            return redirect(self.success_url)
         return super().dispatch(request, *args, **kwargs)
-    
+
     def get_form_kwargs(self):
+        """Añadir el usuario actual a los argumentos del formulario."""
         kwargs = super().get_form_kwargs()
-        kwargs['usuario'] = self.request.user.id        
+        kwargs['usuario'] = self.request.user
         return kwargs
 
     def form_valid(self, form):
-        publicacion = form.storePublicacion()
+        """Guardar la publicación si el formulario es válido."""
+        publicacion = form.save(commit=False)
+        publicacion.usuario = self.request.user
+        publicacion.save()
         return redirect(self.success_url)
-    
+
     def get_context_data(self, **kwargs):
-
+        """Agregar el contexto de materias y profesores al formulario."""
         context = super().get_context_data(**kwargs)
-        
-        profesor = Profesor.objects.all()
-        materia = Materia.objects.all()
-
-        context['materias'] = materia
-        context['profesores'] = profesor
-
+        context['materias'] = Materia.objects.all()
+        context['profesores'] = Profesor.objects.all()
         return context
 
 class InicioSesionView(views.LoginView):
@@ -72,3 +70,12 @@ class HomeView(generic.ListView):
 
     def get_queryset(self):
         return Publicacion.objects.order_by('-fecha')[:5]
+
+class PublicacionForm(forms.ModelForm):
+    class Meta:
+        model = Publicacion
+        fields = ['titulo', 'comentario', 'materia', 'profesor', 'dominio', 'puntualidad', 'asistencia', 'dificultad', 'seguimiento']
+
+    def __init__(self, *args, **kwargs):
+        self.usuario = kwargs.pop('usuario', None)
+        super().__init__(*args, **kwargs)
