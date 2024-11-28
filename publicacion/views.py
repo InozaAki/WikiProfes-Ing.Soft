@@ -25,14 +25,26 @@ class ProfesorView(generic.ListView):
     
 class MateriaView(generic.ListView):
     template_name = 'materia/materiaDetalles.html'
+    context_object_name = 'publicacion_list'
 
     def get_queryset(self):
-        materia = Publicacion.objects.filter(materia_id=self.kwargs['materia_id'])
+        # Filtrar publicaciones por materia
+        publicaciones = Publicacion.objects.filter(materia_id=self.kwargs['materia_id'])
 
-        if not materia:
-            materia = Materia.objects.filter(id=self.kwargs['materia_id'])
+        return publicaciones
 
-        return materia
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        publicaciones = self.get_queryset()
+
+        # Obtener profesores únicos
+        profesores_unicos = (
+            publicaciones.values('profesor_id', 'profesor__nombre')
+            .distinct()
+        )
+        context['profesores_unicos'] = profesores_unicos
+        context['materia'] = Materia.objects.get(id=self.kwargs['materia_id'])
+        return context
 
 class DetallePublicacionView(generic.DetailView):
     model = Publicacion
