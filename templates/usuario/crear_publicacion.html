@@ -32,36 +32,60 @@
                 </div>
                 <div class="form-group">
                     <label for="inputTitulo">Título</label>
-                    <input type="text" class="form-control" id="inputTitulo" name="titulo">
+                    <input type="text" class="form-control" id="inputTitulo" name="titulo" value="{{ form.titulo.value|default:'' }}">
                 </div>
                 <div class="form-group">
                     <label for="inputTitulo">Comentario</label>
-                    <textarea class="form-control" id="inputComentario" name="comentario"></textarea>
+                    <textarea class="form-control" id="inputComentario" name="comentario" >{{ form.comentario.value|default:'' }}</textarea>
                 </div>
                 <div class="row" style="margin-top: 0.2rem;">
-                    <h5> Criterios de evaluación ( 0 - 10 )</h5>
-                    <div class="col">
-                        <label for="inputDominio">Dominio</label>
-                      <input type="tel" maxlength="2" class="form-control" id="inputDominio" name="dominio">
-                    </div>
-                    <div class="col">
-                        <label for="inputPuntualidad">Puntualidad</label>
-                      <input type="tel" maxlength="2" class="form-control" id="inputPuntualidad" name="puntualidad">
-                    </div>
-                    <div class="col">
-                        <label for="inputAsistencia">Asistencia</label>
-                      <input type="tel" maxlength="2" class="form-control" id="inputAsistencia" name="asistencia">
-                    </div>
-                    <div class="col">
-                        <label for="inputDificultad">Dificultad</label>
-                      <input type="tel" maxlength="2" class="form-control" id="inputDificultad" name="dificultad">
-                    </div>
-                    <div class="col">
-                        <label for="inputSeguimiento">Seguimiento</label>
-                      <input type="tel" maxlength="2" class="form-control" id="inputSeguimiento" name="seguimiento">
-                    </div>
+                  <h5>Criterios de evaluación (0 - 10)</h5>
+                  <div class="col">
+                      <label for="inputDominio">Dominio</label>
+                      <input type="tel" maxlength="2" class="form-control {% if form.errors.dominio %}is-invalid{% endif %}" id="inputDominio" name="dominio" value="{{ form.dominio.value|default:'' }}">
+                      {% if form.errors.dominio %}
+                          <div class="invalid-feedback">
+                              {{ form.errors.dominio.0 }}
+                          </div>
+                      {% endif %}
                   </div>
-            </div>
+                  <div class="col">
+                      <label for="inputPuntualidad">Puntualidad</label>
+                      <input type="tel" maxlength="2" class="form-control {% if form.errors.puntualidad %}is-invalid{% endif %}" id="inputPuntualidad" name="puntualidad" value="{{ form.puntualidad.value|default:'' }}">
+                      {% if form.errors.puntualidad %}
+                          <div class="invalid-feedback">
+                              {{ form.errors.puntualidad.0 }}
+                          </div>
+                      {% endif %}
+                  </div>
+                  <div class="col">
+                      <label for="inputAsistencia">Asistencia</label>
+                      <input type="tel" maxlength="2" class="form-control {% if form.errors.asistencia %}is-invalid{% endif %}" id="inputAsistencia" name="asistencia" value="{{ form.asistencia.value|default:'' }}">
+                      {% if form.errors.asistencia %}
+                          <div class="invalid-feedback">
+                              {{ form.errors.asistencia.0 }}
+                          </div>
+                      {% endif %}
+                  </div>
+                  <div class="col">
+                      <label for="inputDificultad">Dificultad</label>
+                      <input type="tel" maxlength="2" class="form-control {% if form.errors.dificultad %}is-invalid{% endif %}" id="inputDificultad" name="dificultad" value="{{ form.dificultad.value|default:'' }}">
+                      {% if form.errors.dificultad %}
+                          <div class="invalid-feedback">
+                              {{ form.errors.dificultad.0 }}
+                          </div>
+                      {% endif %}
+                  </div>  
+                  <div class="col">
+                      <label for="inputSeguimiento">Seguimiento</label>
+                      <input type="tel" maxlength="2" class="form-control {% if form.errors.seguimiento %}is-invalid{% endif %}" id="inputSeguimiento" name="seguimiento" value="{{ form.seguimiento.value|default:'' }}">
+                      {% if form.errors.seguimiento %}
+                          <div class="invalid-feedback">
+                              {{ form.errors.seguimiento.0 }}
+                          </div>
+                      {% endif %}
+                  </div>
+              </div>              
             <div style="margin-top: 2rem;" class="btn-group" role="group" aria-label="Basic example">
                 <button type="reset" class="btn btn-primary">Limpiar</button>
                 <button type="submit" class="btn btn-primary">Crear publicación</button>

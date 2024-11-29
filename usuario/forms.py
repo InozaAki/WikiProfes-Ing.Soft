@@ -1,5 +1,6 @@
 from datetime import date
 from django import forms
+from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 from publicacion.models import Publicacion
@@ -57,6 +58,26 @@ class PublicacionForm(forms.Form):
     def __init__(self, *args, usuario=None, **kwargs):
         super().__init__(*args, **kwargs)
         self.usuario = usuario
+
+    def clean_dominio(self):
+        return self.validate_range(self.cleaned_data.get('dominio'), 'Dominio')
+
+    def clean_puntualidad(self):
+        return self.validate_range(self.cleaned_data.get('puntualidad'), 'Puntualidad')
+
+    def clean_asistencia(self):
+        return self.validate_range(self.cleaned_data.get('asistencia'), 'Asistencia')
+
+    def clean_dificultad(self):
+        return self.validate_range(self.cleaned_data.get('dificultad'), 'Dificultad')
+
+    def clean_seguimiento(self):
+        return self.validate_range(self.cleaned_data.get('seguimiento'), 'Seguimiento')
+
+    def validate_range(self, value, field_name):
+        if value is None or not (0 <= value <= 10):
+            raise ValidationError(f'{field_name} debe ser un valor entre 0 y 10.')
+        return value
 
     def storePublicacion(self):
         cleaned_data = self.cleaned_data
