@@ -6,11 +6,38 @@
 
 {% block content%}
 
-
-
-
-
 <div style="margin-top: 3rem;">
-
+    {% if busqueda %}
+        <h5> Resultados de búsqueda para: {{busqueda}} </h5>
+        {% if resultados %}
+            {% for resultado in resultados %}
+                {% if resultado.tipo == "profesor" %}
+                    <div class="container" style="margin-top: 1rem;">
+                        <div class="card">
+                            <div class="card-body">
+                            <h5 class="card-title">{{resultado.objeto.nombre}}</h5>
+                            <a href="{% url 'publicacion:profesor' resultado.objeto.id %}" class="btn btn-primary">Ver perfil</a>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="container" style="margin-top: 1rem;">
+                        <div class="card">
+                            <div class="card-body">
+                            <h5 class="card-title">{{resultado.objeto.nombre}}</h5>
+                            <p class="card-text">{{resultado.objeto.clave}}</p>
+                            <a class="btn btn-primary" href="{% url 'publicacion:materia' resultado.objeto.id %}">Ver detalles</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            <h3> No se encontró nada</h3>
+        {% endif %}
+    {% else %}
+        <h5>No has buscado nada 😿</h5>
+    {% endif%}
 </div>
+
 {% endblock content%}

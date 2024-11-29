@@ -67,12 +67,24 @@ def logOutRequest(request):
 def busqueda(request):
     template_name = 'pages/busqueda.html'
 
-    if request.method == 'POST':
-        print("culos")
+    busqueda = request.GET.get("busqueda", "")
+    if busqueda:
+        resultados = []
+
+        profesores = Profesor.objects.filter(nombre__contains=busqueda)
+        if profesores.exists():
+            resultados.extend([{'tipo': 'profesor', 'objeto': prof} for prof in profesores])
+        
+        materias = Materia.objects.filter(nombre__contains=busqueda)
+        if materias.exists():
+            resultados.extend([{'tipo': 'materia', 'objeto': mat} for mat in materias])
+        
+        return render(request, template_name, {'busqueda': busqueda, 'resultados': resultados})
+    else:
+        return render(request, template_name, {})
 
 
 
-    return render(request, template_name)
 
 class HomeView(generic.ListView):
     model = Publicacion
