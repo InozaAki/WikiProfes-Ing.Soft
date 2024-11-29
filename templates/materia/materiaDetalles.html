@@ -1,48 +1,38 @@
 {% extends "base.html" %}
 
 {% block title %}
-    {% if materia_list %}
-        <title>{{ materia_list.0.nombre }}</title>
-    {% else %}
-        <title>{{ materia.nombre }}</title>
-    {% endif %}
+    <title>{{ materia.nombre }}</title>
 {% endblock title %}
 
 {% block content %}
-{% if materia_list %}
-    <div style="text-align: center; margin-top: 2rem;">
-        <h3>{{ materia_list.0.nombre }}</h3>
-        <a><strong>Clave:</strong> {{ materia_list.0.clave }}</a> <br />
-        <a><strong>Departamento:</strong> {{ materia_list.0.departamento }}</a>
-    </div>
+<div style="text-align: center; margin-top: 2rem;">
+    <h3>{{ materia.nombre }}</h3>
+    <a><strong>Clave:</strong> {{ materia.clave }}</a> <br />
+    <a><strong>Departamento:</strong> {{ materia.departamento }}</a>
+</div>
 
-    <div style="margin-top: 3rem;">
-        <h4 style="text-align: center;"> Aún no hay profesores que imparten esta materia 😿</h4>
-    </div>
-{% else %}
-    <div style="text-align: center; margin-top: 2rem;">
-        <h3>{{ materia.nombre }}</h3>
-        <a><strong>Clave:</strong> {{ materia.clave }}</a> <br />
-        <a><strong>Departamento:</strong> {{ materia.departamento }}</a>
-    </div>
-
-    <div style="margin-top: 3rem;">
-        <h4 style="text-align: center;"> Profesores que la imparten</h4>
-        {% for profesor in profesores_unicos %}
-        <section>
-            <div class="container" style="margin-top: 1rem;">
-                <div class="card text-center">
-                    <div class="card-body">
-                        <h5 class="card-title">
-                            <a href="{% url 'publicacion:profesor' profesor.profesor_id %}">
-                                {{ profesor.profesor__nombre }}
-                            </a>
-                        </h5>
-                    </div>
+{% if profesores_unicos %}
+<div style="margin-top: 3rem;">
+    <h4 style="text-align: center;"> Profesores que la imparten</h4>
+    {% for profesor in profesores_unicos %}
+    <section>
+        <div class="container" style="margin-top: 1rem;">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <a href="{% url 'publicacion:profesor' profesor.profesor_id %}">
+                            {{ profesor.profesor__nombre }}
+                        </a>
+                    </h5>
                 </div>
             </div>
-        </section>
-        {% endfor %}
-    </div>
+        </div>
+    </section>
+    {% endfor %}
+</div>
+{% else%}
+<div style="margin-top: 3rem;">
+    <h4 style="text-align: center;"> Aún no hay profesores que imparten esta materia 😿</h4>
+</div>
 {% endif %}
 {% endblock content %}
