@@ -10,7 +10,7 @@ class ProfesorView(generic.ListView):
     context_object_name = 'publicaciones'
 
     def get_queryset(self):
-        return Publicacion.objects.filter(profesor_id=self.kwargs['profesor_id'])
+        return Publicacion.objects.filter(profesor_id=self.kwargs['profesor_id']).order_by('-fecha')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -28,7 +28,6 @@ class MateriaView(generic.ListView):
     context_object_name = 'publicacion_list'
 
     def get_queryset(self):
-        # Filtrar publicaciones por materia
         publicaciones = Publicacion.objects.filter(materia_id=self.kwargs['materia_id'])
 
         return publicaciones
@@ -37,7 +36,6 @@ class MateriaView(generic.ListView):
         context = super().get_context_data(**kwargs)
         publicaciones = self.get_queryset()
 
-        # Obtener profesores únicos
         profesores_unicos = (
             publicaciones.values('profesor_id', 'profesor__nombre')
             .distinct()

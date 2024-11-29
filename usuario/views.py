@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.contrib import messages
 from django.views import generic
 from django.urls import reverse_lazy
 from .forms import RegistroForm, PublicacionForm
@@ -22,6 +23,7 @@ class RegistroView(generic.FormView):
 
     def form_valid(self, form):
         usuario = form.storeUser()
+        messages.info(self.request, 'Se ha registrado al usuario con éxito!')
         return super().form_valid(form)
 
 class CrearPublicacion(generic.FormView):
@@ -41,6 +43,7 @@ class CrearPublicacion(generic.FormView):
 
     def form_valid(self, form):
         publicacion = form.storePublicacion()
+        messages.info(self.request, 'Se ha creado la publicación!')
         return redirect(self.success_url)
     
     def get_context_data(self, **kwargs):
@@ -62,6 +65,7 @@ class InicioSesionView(views.LoginView):
 
 def logOutRequest(request):
     logout(request)
+    messages.info(request, 'Has cerrado sesión')
     return redirect(reverse_lazy('usuario:index'))
 
 def busqueda(request):
@@ -82,9 +86,6 @@ def busqueda(request):
         return render(request, template_name, {'busqueda': busqueda, 'resultados': resultados})
     else:
         return render(request, template_name, {})
-
-
-
 
 class HomeView(generic.ListView):
     model = Publicacion
